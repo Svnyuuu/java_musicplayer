@@ -80,6 +80,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
     JButton buttonNext;// 下一首
     JButton buttonPre;// 上一首
     JLabel backgroundPlay;// 播放图片
+    JLabel bkpl2;// 波形
     JTextArea textMusic;// 音乐名
     JList listPlayFileTime;// 音乐播放时间
     JButton buttonShowList;// 播放列表
@@ -255,6 +256,10 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
          * 音乐播放背景
          */
         icon = new ImageIcon("./src/assets/icon/gif/playgif7.gif");
+        Icon ic2 = new ImageIcon("./src/assets/icon/gif/g1.gif");
+        bkpl2 = new JLabel(ic2);
+        bkpl2.setBounds(40, 40, 450, 450);
+        getLayeredPane().add(bkpl2);
         backgroundPlay = new JLabel(icon);
         backgroundPlay.setBounds(40, 40, 450, 450);
         getLayeredPane().add(backgroundPlay);
@@ -710,6 +715,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
             Icon icon = new ImageIcon("./src/assets/icon/pause.png");// 将按钮改为暂停
             buttonPlay.setIcon(icon);
             backgroundPlay.setVisible(true);
+            this.bkpl2.setVisible(false);
             int nMusicTime = (int) file.length() / 1024 / 173;// 计算播放时间
             timerFun(nMusicTime);// 启动时间
         }
@@ -733,6 +739,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
                     Icon icon = new ImageIcon("./src/assets/icon/pause.png");
                     buttonPlay.setIcon(icon);
                     backgroundPlay.setVisible(true);
+                    this.bkpl2.setVisible(false);
                     File file = new File(this.playFile);
                     int nMusicTime = (int) file.length() / 1024 / 173;
                     timerFun(nMusicTime);
@@ -746,6 +753,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
                 Icon icon = new ImageIcon("./src/assets/icon/pause.png");
                 this.buttonPlay.setIcon(icon);
                 this.backgroundPlay.setVisible(false);
+                this.bkpl2.setVisible(true);
                 // 记录播放时间
 
                 // this.nTimer.cancel();
@@ -861,7 +869,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
                     Icon icon = new ImageIcon("./src/assets/icon/pause.png");// 播放按钮转换为暂停
                     buttonPlay.setIcon(icon);
                     backgroundPlay.setVisible(true);
-
+                    this.bkpl2.setVisible(false);
                     File file = new File(playFile);
                     int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                     timerFun(nMusicTime);
