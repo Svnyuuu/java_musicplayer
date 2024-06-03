@@ -1,4 +1,3 @@
-
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.MalformedURLException;
@@ -14,103 +13,108 @@ import java.awt.*;
 import java.net.*;
 import java.util.*;
 import java.util.Timer;
+import javax.imageio.ImageIO;
 
 /*
 	音乐播放器类
 */
-class audioplay{
+class audioplay {
     AudioClip adc;
     URL url;
-    boolean adcFlag=false;//文件标志
-    boolean playFlag=false;//播放标志
-    void SetPlayAudioPath(String path){//设置路径
-        try{
+    boolean adcFlag = false;// 文件标志
+    boolean playFlag = false;// 播放标志
+
+    void SetPlayAudioPath(String path) {// 设置路径
+        try {
             url = new URL(path);
-            if(adcFlag==true){adc.stop();playFlag=false;}
+            if (adcFlag == true) {
+                adc.stop();
+                playFlag = false;
+            }
             adc = Applet.newAudioClip(url);
-            adcFlag=true;
-        }
-        catch (MalformedURLException e1) {
+            adcFlag = true;
+        } catch (MalformedURLException e1) {
             e1.printStackTrace();
         }
     }
-    void play(){    //播放音乐
+
+    void play() { // 播放音乐
         adc.play();
-        playFlag=true;
+        playFlag = true;
     }
-    void stop(){     //暂停音乐
+
+    void stop() { // 暂停音乐
         adc.stop();
-        playFlag=false;
+        playFlag = false;
     }
 }
 
 /*
-	图像界面类
+ * 图像界面类
  */
-class MyExtendsJFrame extends JFrame implements ActionListener,MouseListener{
-    //参数
-    final int width = 1280;//界面宽度1280
-    final int height = 836;//界面高度836
-    final int tool_width = 80;//图标大小
+class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
+    // 参数
+    final int width = 1200;// 界面宽度
+    final int height = 800;// 界面高度
+    final int tool_width = 100;// 图标大小
 
-    //工作成员
-    audioplay audioPlay;//音乐播放器
-    Timer nTimer;//定时器
-    String MusicName;//音乐名
-    String playFile;//文件路径
-    String playFileName;//文件名
-    String playFileDirectory;//文件的具体目录
-    int MusicTime;//当前时间
-    Vector vt = new Vector();//播放队列
-    Vector vtime = new Vector();//时间队列
-    int flagway = 0;//播放方式 0->循环播放 1->顺序播放 2->随机播放
+    // 工作成员
+    audioplay audioPlay;// 音乐播放器
+    Timer nTimer;// 定时器
+    String MusicName;// 音乐名
+    String playFile;// 文件路径
+    String playFileName;// 文件名
+    String playFileDirectory;// 文件的具体目录
+    int MusicTime;// 当前时间
+    Vector vt = new Vector();// 播放队列
+    Vector vtime = new Vector();// 时间队列
+    int flagway = 0;// 播放方式 0->循环播放 1->顺序播放 2->随机播放
 
-    //控件
-    JLabel background;//背景
-    JButton buttonPlay;//播放按钮
-    JButton buttonOpenFile;//打开文件按钮
-    JTextPane textLyrics;//歌词
-    JLabel playTime;//进度条
-    JList listPlayFile;//播放列表
-    JButton buttonNext;//下一首
-    JButton buttonPre;//上一首
-    JLabel backgroundPlay;//播放图片
-    JTextArea textMusic;//音乐名
-    JList listPlayFileTime;//音乐播放时间
-    JButton buttonShowList;//播放列表
-    JTextArea musictitle;//歌曲名
-    JButton buttonWay;//播放方式
-    JTextArea TimeCount;//显示当前播放时间
+    // 控件
+    JLabel background;// 背景
+    JButton buttonPlay;// 播放按钮
+    JButton buttonOpenFile;// 打开文件按钮
+    JTextPane textLyrics;// 歌词
+    JLabel playTime;// 进度条
+    JList listPlayFile;// 播放列表
+    JButton buttonNext;// 下一首
+    JButton buttonPre;// 上一首
+    JLabel backgroundPlay;// 播放图片
+    JTextArea textMusic;// 音乐名
+    JList listPlayFileTime;// 音乐播放时间
+    JButton buttonShowList;// 播放列表
+    JTextArea musictitle;// 歌曲名
+    JButton buttonWay;// 播放方式
+    JTextArea TimeCount;// 显示当前播放时间
 
+    /*
+     * 歌词
+     */
 
-	/*
-		歌词
-	*/
-
-    //飘洋过海
-    String[] sLyrics1 = {//{4,7,10,12,16,22,26,29,31,35,39,42,48,52}
-            "记忆它总是慢慢的累积\n",//4
-            "在我心中无法抹去\n",//7
-            "为了你的承诺\n",	//10
-            "我在最绝望的时候\n",//12
-            "都忍着不哭泣\n",//16
-            "陌生的城市啊\n",//22
-            "熟悉的角落里\n",//26
-            "也曾彼此安慰\n",//29
-            "也曾相拥叹息\n",//31
-            "不管将会面对什么样的结局\n",//35
-            "在漫天风沙里望着你远去\n",//39
-            "我竟悲伤得不能自己\n",//42
-            "多盼能送君千里\n",//45
-            "直到山穷水尽\n",//48
-            "一生和你相依"//52
+    // 飘洋过海
+    String[] sLyrics1 = { // {4,7,10,12,16,22,26,29,31,35,39,42,48,52}
+            "记忆它总是慢慢的累积\n", // 4
+            "在我心中无法抹去\n", // 7
+            "为了你的承诺\n", // 10
+            "我在最绝望的时候\n", // 12
+            "都忍着不哭泣\n", // 16
+            "陌生的城市啊\n", // 22
+            "熟悉的角落里\n", // 26
+            "也曾彼此安慰\n", // 29
+            "也曾相拥叹息\n", // 31
+            "不管将会面对什么样的结局\n", // 35
+            "在漫天风沙里望着你远去\n", // 39
+            "我竟悲伤得不能自己\n", // 42
+            "多盼能送君千里\n", // 45
+            "直到山穷水尽\n", // 48
+            "一生和你相依"// 52
     };
 
-    //山外小楼夜听雨
+    // 山外小楼夜听雨
     String[] sLyrics2 = {
             "芙蓉花又栖满了枝头 \n",
             "亲何蝶雅留\n",
-            "票白如江水向东流入\n" ,
+            "票白如江水向东流入\n",
             "望断门前隔岸的杨柳 \n",
             "寂寞仍不休\n",
             "我无言让眼泪长流\n",
@@ -119,16 +123,15 @@ class MyExtendsJFrame extends JFrame implements ActionListener,MouseListener{
             "醉后让人烦忧心事雅收\n",
             "山外小阁楼我乘一叶小舟\n",
             "放思念随风漂流\n",
-            "我独坐山外小阁楼\n" ,
+            "我独坐山外小阁楼\n",
             "窗外渔火如豆\n",
             "江畔晚风拂柳诉尽离愁\n",
             "当月色暖小楼是谁又在弹奏\n",
             "那一曲思念常留\n"
     };
 
-
-    //我和我的祖国
-    String[] sLyrics3 = {//{1,6,10,15,19,24,28,32,50,59}
+    // 我和我的祖国
+    String[] sLyrics3 = { // {1,6,10,15,19,24,28,32,50,59}
             "我和我的祖国\n",
             "一刻也不能分割\n",
             "无论我走到哪里\n",
@@ -140,418 +143,496 @@ class MyExtendsJFrame extends JFrame implements ActionListener,MouseListener{
             "你用你那母亲的脉搏和我诉说\n"
     };
 
-
     /*
-        初始化界面
-    */
-    public MyExtendsJFrame(){
-        audioPlay=new audioplay();  //音乐播放对象
-        setTitle("音乐播放器");
-        setBounds(160,100,1300,880);
-        //setBounds(160,100,1300,880);
-        setLayout(null);//排版方式
-        init();   //初始化
-        setVisible(true);//设置界面可见
-        setDefaultCloseOperation(EXIT_ON_CLOSE);//默认退出方式
-    }
-    void init(){//界面的初始化
-		/*
-			界面背景设置
-		*/
-        Icon img=new ImageIcon("./src/assets/background2.jpg");//界面背景
-        background = new JLabel(img);
-        background.setBounds(0,0,width,height);//设置位置
-        getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));//设为最底层
-        ((JPanel)getContentPane()).setOpaque(false); //控件透明
+     * 初始化界面
+     */
+    public MyExtendsJFrame() {
+        audioPlay = new audioplay(); // 音乐播放对象
 
-		/*
-			播放按钮设置
-		*/
-        buttonPlay=new JButton();//播放按钮
-        buttonPlay.setBounds(width/2-tool_width/2,height-tool_width - 10,tool_width,tool_width); //设置位置
-        Icon icon=new ImageIcon("./src/assets/play1.jpg");//设置图标
+        setTitle("Pito's Music Player");
+        // setBounds(160,100,1300,880);
+        // 设置标题图标
+        try {
+            setIconImage(ImageIO.read(new File("src\\assets\\icon\\pito.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 设置大小为全屏
+        // setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // 设置合适大小
+        setBounds(120, 15, 1200, 800);
+
+        setLayout(null);// 排版方式
+        init(); // 初始化
+        setVisible(true);// 设置界面可见
+        setDefaultCloseOperation(EXIT_ON_CLOSE);// 默认退出方式
+    }
+
+    void init() {// 界面的初始化
+        /*
+         * 界面背景设置
+         */
+        Icon img = new ImageIcon("./src/assets/icon/background.png");// 界面背景
+        background = new JLabel(img);
+        background.setBounds(0, 0, width, height);// 设置位置
+        getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));// 设为最底层
+        ((JPanel) getContentPane()).setOpaque(false); // 控件透明
+
+        /*
+         * 播放按钮设置
+         */
+
+        buttonPlay = new JButton();// 播放按钮
+        buttonPlay.setBounds(width / 2 - tool_width / 2 -80, height - tool_width - 40, tool_width, tool_width); // 设置位置
+        Icon icon = new ImageIcon("./src/assets/icon/play.png");// 设置图标
+        // //设置按键背景透明
+        // buttonPlay.setOpaque(false);
+        // 消除jbutton白色框
+        buttonPlay.setBorder(null);
+        buttonPlay.setContentAreaFilled(false);
         buttonPlay.setIcon(icon);
-        buttonPlay.setBorderPainted(false);//消隐
-        buttonPlay.addActionListener(this);//添加监听器
+        buttonPlay.setBorderPainted(false);// 消隐
+        buttonPlay.addActionListener(this);// 添加监听器
         add(buttonPlay);
 
-		/*
-			下一首按钮
-		*/
-        buttonNext = new JButton("");//下一首按钮
-        buttonNext.setBounds(width/2-tool_width/2+80, height-tool_width - 10, tool_width, tool_width);
-        icon = new ImageIcon("./src/assets/next1.jpg");
+        /*
+         * 下一首按钮
+         */
+        buttonNext = new JButton();// 下一首按钮
+        buttonNext.setBounds(width / 2 - tool_width / 2 + 40, height - tool_width - 40, tool_width, tool_width);
+        icon = new ImageIcon("./src/assets/icon/next.png");
+        // 消除jbutton白色框
+        buttonNext.setBorder(null);
+        buttonNext.setContentAreaFilled(false);
         buttonNext.setIcon(icon);
-        buttonNext.setBorderPainted(false);//消隐
+        buttonNext.setBorderPainted(false);// 消隐
         buttonNext.addActionListener(this);
         add(buttonNext);
 
-		/*
-			上一首按钮
-		*/
+        /*
+         * 上一首按钮
+         */
         buttonPre = new JButton("");
-        buttonPre.setBounds(width/2-tool_width/2-80, height-tool_width - 10, tool_width, tool_width);
-        icon = new ImageIcon("./src/assets/prev1.jpg");
+        buttonPre.setBounds(width / 2 - tool_width / 2 - 200, height - tool_width - 40, tool_width, tool_width);
+        icon = new ImageIcon("./src/assets/icon/previous.png");
+        // 消除jbutton白色框
+        buttonPre.setBorder(null);
+        buttonPre.setContentAreaFilled(false);
         buttonPre.setIcon(icon);
-        buttonPre.setBorderPainted(false);//消隐
+        buttonPre.setBorderPainted(false);// 消隐
         buttonPre.addActionListener(this);
         add(buttonPre);
 
-		/*
-			播放方式按钮
-		*/
+        /*
+         * 播放方式按钮
+         */
         buttonWay = new JButton("");
-        buttonWay.setBounds(width/2-tool_width/2-160, height-tool_width - 10, tool_width, tool_width);
-        icon = new ImageIcon("./src/assets/loop.jpg");
+        buttonWay.setBounds(width / 2 - tool_width / 2 - 320, height - tool_width - 40, tool_width, tool_width);
+        icon = new ImageIcon("./src/assets/icon/loop.png");
+        // 消除jbutton白色框
+        buttonWay.setBorder(null);
+        buttonWay.setContentAreaFilled(false);
         buttonWay.setIcon(icon);
-        buttonWay.setBorderPainted(false);//消隐
+        buttonWay.setBorderPainted(false);// 消隐
         buttonWay.addActionListener(this);
         add(buttonWay);
 
-		/*
-			文件打开按钮
-		*/
-        buttonOpenFile=new JButton("");//打开按钮
-        buttonOpenFile.setBounds(width/2-tool_width/2+160,height-tool_width-10,tool_width,tool_width); //设置位置
-        icon=new ImageIcon("./src/assets/open.jpg"); //图标
+        /*
+         * 文件打开按钮
+         */
+        buttonOpenFile = new JButton("");// 打开按钮
+        buttonOpenFile.setBounds(width / 2 - tool_width / 2 + 160, height - tool_width - 40, tool_width, tool_width); // 设置位置
+        icon = new ImageIcon("./src/assets/icon/load.png"); // 图标
+        // 消除jbutton白色框
+        buttonOpenFile.setBorder(null);
+        buttonOpenFile.setContentAreaFilled(false);
         buttonOpenFile.setIcon(icon);
-        buttonOpenFile.setBorderPainted(false);//消隐
-        buttonOpenFile.addActionListener(this);//添加监听器
+        buttonOpenFile.setBorderPainted(false);// 消隐
+        buttonOpenFile.addActionListener(this);// 添加监听器
         add(buttonOpenFile);
 
-		/*
-			音乐播放背景
-		*/
-        icon = new ImageIcon("./src/assets/Gif6.gif");
+        /*
+         * 音乐播放背景
+         */
+        icon = new ImageIcon("./src/assets/icon/gif/playgif7.gif");
         backgroundPlay = new JLabel(icon);
         backgroundPlay.setBounds(40, 40, 450, 450);
         getLayeredPane().add(backgroundPlay);
-        //backgroundPlay.addMouseListener(this);//添加监听器
+        // backgroundPlay.addMouseListener(this);//添加监听器
 
-		/*
-			动态的GIF波形
-		*/
+        /*
+         * 动态的GIF波形
+         */
 
-    /*    icon = new ImageIcon("./src/assets/Gif1.gif");
-        gifwave = new JLabel(icon);
-        gifwave.setBounds(width-10,height-133,width-20,50);	  	//设置大小
-        add(gifwave);
-        gifwave.setVisible(true);
-*/
+        /*
+         * icon = new ImageIcon("./src/assets/Gif1.gif");
+         * gifwave = new JLabel(icon);
+         * gifwave.setBounds(width-10,height-133,width- 25,50); //设置大小
+         * add(gifwave);
+         * gifwave.setVisible(true);
+         */
 
-		/*
-			时间条
-		*/
+        /*
+         * 时间条
+         */
 
-        icon=new ImageIcon("./src/assets/time1.jpg");     //时间条
+        icon = new ImageIcon("./src/assets/icon/time.jpg"); // 时间条
         playTime = new JLabel(icon);
-        playTime.setBounds(150,height-100,1000,3);	  	//设置大小
+        playTime.setBounds(100, 640, 1000, 3); // 设置大小
         add(playTime);
 
-		/*
-            设置时间显示
+        /*
+         * 设置时间显示
          */
         TimeCount = new JTextArea("00:00");
-        TimeCount.setBounds(70,height-110,80,20);
+        TimeCount.setBounds(80, height - 170, 80, 20);
         TimeCount.setForeground(Color.white);
-        TimeCount.setFont(new Font("楷体",1,20));
+        TimeCount.setFont(new Font("楷体", 1, 20));
         TimeCount.setOpaque(false);
-        add(TimeCount);//添加时间计数监听器
+        add(TimeCount);// 添加时间计数监听器
 
-		/*
-			音乐列表按钮
-		*/
+        /*
+         * 音乐列表按钮
+         */
         buttonShowList = new JButton("");
-        buttonShowList.setBounds(width/2-tool_width/2+240,height-90,tool_width,tool_width);
-        buttonShowList.setIcon(new ImageIcon("./src/assets/list.jpg"));
-        buttonShowList.setBorderPainted(false);//消隐
+        buttonShowList.setBounds(width / 2 - tool_width / 2 + 280, height - tool_width - 40, tool_width, tool_width);
+        buttonShowList.setIcon(new ImageIcon("./src/assets/icon/playlist.png"));
+        // 消除jbutton白色框
+        buttonShowList.setBorder(null);
+        buttonShowList.setContentAreaFilled(false);
+        buttonShowList.setBorderPainted(false);// 消隐
         buttonShowList.addActionListener(this);
         add(buttonShowList);
 
-		/*
-			歌词
-		*/
-        textLyrics=new JTextPane();   //歌词
-        textLyrics.setBounds(width/2+300,height/2-200,250,300);//设置位置
-        textLyrics.setForeground(Color.white);//前置颜色
+        /*
+         * 歌词
+         */
+        textLyrics = new JTextPane(); // 歌词
+        textLyrics.setBounds(width / 2 + 150, height / 2 - 200, 250, 300);// 设置位置
+        textLyrics.setForeground(Color.white);// 前置颜色
         textLyrics.setOpaque(false);
         add(textLyrics);
-        textLyrics.setText("这是歌词");//歌词内容
-        textLyrics.setFont(new Font("楷体",1,20));
+        textLyrics.setText("这是歌词");// 歌词内容
+        //设置为只读
+        textLyrics.setEditable(false);
+        textLyrics.setFont(new Font("华文行楷", 1, 20));
 
-		/*
-			歌名
-		*/
+        /*
+         * 歌名
+         */
 
         musictitle = new JTextArea("歌名");
-        musictitle.setBounds(width/2+300,height/2-200-50,300,100);
+        musictitle.setBounds(width / 2 + 200, height / 2 - 200 - 50, 300, 100);
         musictitle.setForeground(Color.white);
         musictitle.setOpaque(false);
-        musictitle.setFont(new Font("楷体",1,30));
+        musictitle.setEditable(false);
+        musictitle.setFont(new Font("华文行楷", 1, 30));
         add(musictitle);
 
-		/*
-			音乐列表
-		*/
+        /*
+         * 音乐列表
+         */
 
-        listPlayFile=new JList();	  //音乐列表
-        listPlayFile.setBounds(width-300,height-300,200,150); //设置位置
+        listPlayFile = new JList(); // 音乐列表
+        listPlayFile.setBounds(width - 300, height - 300, 200, 150); // 设置位置
         listPlayFile.setOpaque(false);
-        listPlayFile.setFont(new Font("楷体",1,20));
-        listPlayFile.setBackground(new Color(0, 0, 0, 0));//设置背景
+        listPlayFile.setFont(new Font("华文行楷", 1, 20));
+        listPlayFile.setBackground(new Color(0, 0, 0, 0));// 设置背景
         listPlayFile.setForeground(Color.white);
         add(listPlayFile);
-        listPlayFile.addMouseListener(this);//添加监听器
+        listPlayFile.addMouseListener(this);// 添加监听器
 
-		/*
-			音乐播放时间
-		*/
+        /*
+         * 音乐播放时间
+         */
         listPlayFileTime = new JList();
-        listPlayFileTime.setBounds(width-300+200,height-300,150,150);
+        listPlayFileTime.setBounds(width - 300 + 200, height - 300, 150, 150);
         listPlayFileTime.setOpaque(false);
-        listPlayFileTime.setFont(new Font("楷体",1,20));
+        listPlayFileTime.setFont(new Font("华文行楷", 1, 20));
         listPlayFileTime.setBackground(new Color(0, 0, 0, 0));
         listPlayFileTime.setForeground(Color.white);
         add(listPlayFileTime);
+
+        //添加mv
+        // Icon mv = new ImageIcon("./src/assets/icon/mv.png");
+        // JLabel mvlabel = new JLabel(mv);
+        // mvlabel.setBounds(width / 2 - tool_width / 2 + 400, height - tool_width - 40, tool_width, tool_width);
+        // mvlabel.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // String songTitle = songTitle;
+        //         // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
+        //         JFileChooser fileChooser = new JFileChooser();
+        //         fileChooser.setCurrentDirectory(new File("D:\\Code\\java\\musicplayer\\src\\assets\\mv"));
+        //         fileChooser.setDialogTitle("Select MV File");
+        //         int result = fileChooser.showOpenDialog(GUI.this);
+        //         if (result == JFileChooser.APPROVE_OPTION) {
+        //             File selectedFile = fileChooser.getSelectedFile();
+        //             String mvFilePath = selectedFile.getAbsolutePath();
+        //             try {
+        //                 Desktop.getDesktop().open(new File(mvFilePath));
+        //             } catch (IOException ex) {
+        //                 ex.printStackTrace();
+        //             }
+        //         }
+        //     } // Add this closing brace
+        // });
+        
+        // add(mvlabel);
+        icon = new ImageIcon("./src/assets/icon/mv.png");
+
+        JButton linkButton = new JButton(icon);
+        linkButton.setBounds(width / 2 - tool_width / 2 + 400, height - tool_width - 40, tool_width, tool_width);
+        // linkButton.setBorderPainted(false);
+        // linkButton.setBackground(null);
+        // 消除jbutton白色框
+        linkButton.setBorder(null);
+        linkButton.setContentAreaFilled(false);
+        linkButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // String songTitle = songTitle;
+                    // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setCurrentDirectory(new File("D:\\Code\\java\\Pito\\src\\assets\\mv"));
+                    fileChooser.setDialogTitle("Select MV File");
+                    int result = fileChooser.showOpenDialog(MyExtendsJFrame.this);
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        String mvFilePath = selectedFile.getAbsolutePath();
+                        try {
+                            Desktop.getDesktop().open(new File(mvFilePath));
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                } // Add this closing brace
+            });
+        add(linkButton);
+        
     }
 
     /*
-        时间计数器
+     * 时间计数器
      */
-    public void timerFun(int musicTime)
-    {
-        MusicTime = musicTime;//当前音乐播放需要的时间
-        if (nTimer != null) {//计数器如果在走则停下来
+    public void timerFun(int musicTime) {
+        MusicTime = musicTime;// 当前音乐播放需要的时间
+        if (nTimer != null) {// 计数器如果在走则停下来
             nTimer.cancel();
         }
-        //重新创建一个时间对象
+        // 重新创建一个时间对象
         nTimer = new Timer();
-        nTimer.schedule(new TimerTask()//内部类
+        nTimer.schedule(new TimerTask()// 内部类
         {
             int PlayTime = 0;
-            public void run()//时间走
+
+            public void run()// 时间走
             {
-                PlayTime ++;//+1s
-                if (PlayTime >= MusicTime) {//播放结束
+                PlayTime++;// +1s
+                if (PlayTime >= MusicTime) {// 播放结束
                     nTimer.cancel();
-                    //int flagway = 0;//播放方式 0->循环播放 1->顺序播放 2->随机播放
-                    if(flagway==0&&vt.size()!=0){//0->循环播放
+                    // int flagway = 0;//播放方式 0->循环播放 1->顺序播放 2->随机播放
+                    if (flagway == 0 && vt.size() != 0) {// 0->循环播放
                         audioPlay.play();
                         timerFun(MusicTime);
-                    }
-                    else if(flagway==1&&vt.size()!=0){//1->顺序播放
+                    } else if (flagway == 1 && vt.size() != 0) {// 1->顺序播放
                         int position = vt.lastIndexOf(playFileName);
-                        position = (position+1)%(vt.size());//通过取余获得下一个音乐的位置
-                        playFileName=(String)vt.get(position);
+                        position = (position + 1) % (vt.size());// 通过取余获得下一个音乐的位置
+                        playFileName = (String) vt.get(position);
                         playFile = playFileDirectory + playFileName;
-                        audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-                        audioPlay.play();//播放下一首音乐
+                        audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+                        audioPlay.play();// 播放下一首音乐
                         File file = new File(playFile);
-                        int nMusicTime = (int)file.length() / 1024 / 173;//文件播放需要的时间
+                        int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                         timerFun(nMusicTime);
-                    }
-                    else if(flagway==2){
+                    } else if (flagway == 2) {
                         int position = vt.lastIndexOf(playFileName);
                         int choose = 0;
-                        do{//随机选中一个不同的音乐
-                            choose = (int)(Math.random() * vt.size());
-                        }while(position==choose);
-                        playFileName=(String)vt.get(choose);
+                        do {// 随机选中一个不同的音乐
+                            choose = (int) (Math.random() * vt.size());
+                        } while (position == choose);
+                        playFileName = (String) vt.get(choose);
                         playFile = playFileDirectory + playFileName;
-                        audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-                        audioPlay.play();//播放下一首音乐
+                        audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+                        audioPlay.play();// 播放下一首音乐
                         File file = new File(playFile);
-                        int nMusicTime = (int)file.length() / 1024 / 173;//文件播放需要的时间
+                        int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                         timerFun(nMusicTime);
                     }
                 }
 
-				/*
-					更换音乐播放图片(随机)
-				*/
-          /*      final int N = 10;//10张背景图
-                if(PlayTime%6==0){
-                    int choose = (int)(Math.random()*N)+1;
-                    Icon picture = new ImageIcon("./src/assets/"+choose+".jpg");
-                    backgroundPlay.setIcon(picture);
-                    System.out.println("选择图片"+choose);
-                }
-*/
-				/*
-					显示当前播放时间
-				*/
-                int Second = PlayTime % 60;//秒
-                int Minute = PlayTime / 60;//分钟
+                /*
+                 * 更换音乐播放图片(随机)
+                 */
+                /*
+                 * final int N = 10;//10张背景图
+                 * if(PlayTime%6==0){
+                 * int choose = (int)(Math.random()*N)+1;
+                 * Icon picture = new ImageIcon("./src/assets/"+choose+".png");
+                 * backgroundPlay.setIcon(picture);
+                 * System.out.println("选择图片"+choose);
+                 * }
+                 */
+                /*
+                 * 显示当前播放时间
+                 */
+                int Second = PlayTime % 60;// 秒
+                int Minute = PlayTime / 60;// 分钟
 
-                String sSecond = "";//秒钟字符串
-                String sMinute = "";//分钟字符串
-                if (Second < 10) {//低于2位添加0
+                String sSecond = "";// 秒钟字符串
+                String sMinute = "";// 分钟字符串
+                if (Second < 10) {// 低于2位添加0
                     sSecond = "0" + Second;
-                }
-                else{
+                } else {
                     sSecond = "" + Second;
                 }
-                if (Minute < 10) {//低于2位添加0
+                if (Minute < 10) {// 低于2位添加0
                     sMinute = "0" + Minute;
-                }
-                else{
+                } else {
                     sMinute = "" + Minute;
                 }
                 String sPlayTime = sMinute + ":" + sSecond;
                 System.out.println(sPlayTime);
-                TimeCount.setText(sPlayTime);//更新当前播放时间
-                playTime.setBounds(150,height-100, 1050 * PlayTime / MusicTime , 3);
+                TimeCount.setText(sPlayTime);// 更新当前播放时间
+                playTime.setBounds(150, height - 250, 1050 * PlayTime / MusicTime, 3);
 
-				/*
-					歌词显示
-				*/
-                textLyrics.setText("");//歌词清空
-                //确定是哪个台词
-                //1->飘洋过海 2->山外小楼夜听雨 3->我和我的祖国
+                /*
+                 * 歌词显示
+                 */
+                textLyrics.setText("");// 歌词清空
+                // 确定是哪个台词
+                // 1->飘洋过海 2->山外小楼夜听雨 3->我和我的祖国
                 int flag = 0;
-                if(playFileName.equals("飘洋过海.wav")){
+                if (playFileName.equals("飘洋过海.wav")) {
                     flag = 1;
                     System.out.println("播放飘洋过海歌词");
-                }
-                else if(playFileName.equals("山外小楼夜听雨.wav")){
+                } else if (playFileName.equals("山外小楼夜听雨.wav")) {
                     flag = 2;
                     System.out.println("播放山外小楼夜听雨歌词");
-                }
-                else if(playFileName.equals("我和我的祖国.wav")){
+                } else if (playFileName.equals("我和我的祖国.wav")) {
                     flag = 3;
                     System.out.println("播放我和我的祖国歌词");
                 }
 
-                //逐行扫描歌曲,对应时间段的歌词高亮
-                if(flag == 1){//飘洋过海
-                    int []breaktime = {1,5,8,11,13,17,23,27,30,32,36,40,43,45,49,53};
-                    final int MAX = 12;//最多显示12行
-                    //确定时间段
+                // 逐行扫描歌曲,对应时间段的歌词高亮
+                if (flag == 1) {// 飘洋过海
+                    int[] breaktime = { 1, 5, 8, 11, 13, 17, 23, 27, 30, 32, 36, 40, 43, 45, 49, 53 };
+                    final int MAX = 12;// 最多显示12行
+                    // 确定时间段
                     int position = 0;
-                    for (int i = 0; i < sLyrics1.length; i++)
-                    {
+                    for (int i = 0; i < sLyrics1.length; i++) {
 
-                        for(position = 0;position <sLyrics1.length-1 ;position++){
-                            if(PlayTime<breaktime[0]){
+                        for (position = 0; position < sLyrics1.length - 1; position++) {
+                            if (PlayTime < breaktime[0]) {
                                 break;
                             }
-                            if(PlayTime>=breaktime[position]&&PlayTime<=breaktime[position+1]-1){
+                            if (PlayTime >= breaktime[position] && PlayTime <= breaktime[position + 1] - 1) {
                                 break;
                             }
                         }
-                     //   System.out.println("当前播放位置"+position);
+                        // System.out.println("当前播放位置"+position);
                         SimpleAttributeSet attrSet = new SimpleAttributeSet();
                         StyleConstants.setFontFamily(attrSet, "华文行楷");
-                        StyleConstants.setFontSize(attrSet,20);
-                        int over =  position-MAX;//越过的歌词
-                     //   System.out.println("越界"+over);
-                        try
-                        {
-                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();//获得歌词内容
-                            StyleConstants.setForeground(attrSet, Color.yellow);//当前歌词高亮
-                            StyleConstants.setBold(attrSet, true);//加粗
-                            if(PlayTime>=breaktime[i]&&PlayTime<=breaktime[i+1]-1){
-                                doc.insertString(doc.getLength(), sLyrics1[i], attrSet);//当前歌词高亮
+                        StyleConstants.setFontSize(attrSet, 20);
+                        int over = position - MAX;// 越过的歌词
+                        // System.out.println("越界"+over);
+                        try {
+                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();// 获得歌词内容
+                            StyleConstants.setForeground(attrSet, Color.yellow);// 当前歌词高亮
+                            StyleConstants.setBold(attrSet, true);// 加粗
+                            if (PlayTime >= breaktime[i] && PlayTime <= breaktime[i + 1] - 1) {
+                                doc.insertString(doc.getLength(), sLyrics1[i], attrSet);// 当前歌词高亮
                                 System.out.println(sLyrics1[i]);
-                            }
-                            else{//不在当前歌词普通显示
+                            } else {// 不在当前歌词普通显示
                                 StyleConstants.setForeground(attrSet, Color.white);
                                 StyleConstants.setBold(attrSet, false);
-                                if(over>=0&&i-over<=0){//越界
+                                if (over >= 0 && i - over <= 0) {// 越界
                                     continue;
                                 }
                                 doc.insertString(doc.getLength(), sLyrics1[i], attrSet);
                             }
+                        } catch (BadLocationException localBadLocationException) {
                         }
-                        catch (BadLocationException localBadLocationException) {}
                     }
-                }
-                else if(flag == 2){//山外小楼夜听雨
-                    //设置断点
-                    int []breaktime = {17,21,25,30,35,39,44,49,53,59,66,72,76,81,87,94,100};
-                    final int MAX = 12;//最多显示12行
-                    //确定时间段
+                } else if (flag == 2) {// 山外小楼夜听雨
+                    // 设置断点
+                    int[] breaktime = { 17, 21, 25, 30, 35, 39, 44, 49, 53, 59, 66, 72, 76, 81, 87, 94, 100 };
+                    final int MAX = 12;// 最多显示12行
+                    // 确定时间段
                     int position = 0;
 
-                    for (int i = 0; i < sLyrics2.length; i++)
-                    {
+                    for (int i = 0; i < sLyrics2.length; i++) {
 
-                        for(position = 0;position <sLyrics2.length-1 ;position++){
-                            if(PlayTime<breaktime[0]){
+                        for (position = 0; position < sLyrics2.length - 1; position++) {
+                            if (PlayTime < breaktime[0]) {
                                 break;
                             }
-                            if(PlayTime>=breaktime[position]&&PlayTime<=breaktime[position+1]-1){
+                            if (PlayTime >= breaktime[position] && PlayTime <= breaktime[position + 1] - 1) {
                                 break;
                             }
                         }
-                       // System.out.println("当前播放位置"+position);
+                        // System.out.println("当前播放位置"+position);
                         SimpleAttributeSet attrSet = new SimpleAttributeSet();
                         StyleConstants.setFontFamily(attrSet, "华文行楷");
-                        StyleConstants.setFontSize(attrSet,20);
-                        int over =  position-MAX;//越过的歌词
-                     //   System.out.println("越界"+over);
-                        try
-                        {
-                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();//获得歌词内容
-                            StyleConstants.setForeground(attrSet, Color.yellow);//当前歌词高亮
-                            StyleConstants.setBold(attrSet, true);//加粗
-                            if(PlayTime>=breaktime[i]&&PlayTime<=breaktime[i+1]-1){
-                                doc.insertString(doc.getLength(), sLyrics2[i], attrSet);//当前歌词高亮
+                        StyleConstants.setFontSize(attrSet, 20);
+                        int over = position - MAX;// 越过的歌词
+                        // System.out.println("越界"+over);
+                        try {
+                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();// 获得歌词内容
+                            StyleConstants.setForeground(attrSet, Color.yellow);// 当前歌词高亮
+                            StyleConstants.setBold(attrSet, true);// 加粗
+                            if (PlayTime >= breaktime[i] && PlayTime <= breaktime[i + 1] - 1) {
+                                doc.insertString(doc.getLength(), sLyrics2[i], attrSet);// 当前歌词高亮
                                 System.out.println(sLyrics2[i]);
-                            }
-                            else{//不在当前歌词普通显示
+                            } else {// 不在当前歌词普通显示
                                 StyleConstants.setForeground(attrSet, Color.white);
                                 StyleConstants.setBold(attrSet, false);
-                                if(over>=0&&i-over<=0){//越界
+                                if (over >= 0 && i - over <= 0) {// 越界
                                     continue;
                                 }
                                 doc.insertString(doc.getLength(), sLyrics2[i], attrSet);
                             }
+                        } catch (BadLocationException localBadLocationException) {
                         }
-                        catch (BadLocationException localBadLocationException) {}
                     }
-                }
-                else if(flag == 3){//我和我的祖国
-                    int []breaktime = {1,6,10,15,19,24,28,32,50,59};
-                    final int MAX = 12;//最多显示12行
-                    //确定时间段
+                } else if (flag == 3) {// 我和我的祖国
+                    int[] breaktime = { 1, 6, 10, 15, 19, 24, 28, 32, 50, 59 };
+                    final int MAX = 12;// 最多显示12行
+                    // 确定时间段
                     int position = 0;
-                    for (int i = 0; i < sLyrics3.length; i++)
-                    {
+                    for (int i = 0; i < sLyrics3.length; i++) {
 
-                        for(position = 0;position <sLyrics3.length-1 ;position++){
-                            if(PlayTime<breaktime[0]){
+                        for (position = 0; position < sLyrics3.length - 1; position++) {
+                            if (PlayTime < breaktime[0]) {
                                 break;
                             }
-                            if(PlayTime>=breaktime[position]&&PlayTime<=breaktime[position+1]-1){
+                            if (PlayTime >= breaktime[position] && PlayTime <= breaktime[position + 1] - 1) {
                                 break;
                             }
                         }
-                     //   System.out.println("当前播放位置"+position);
+                        // System.out.println("当前播放位置"+position);
                         SimpleAttributeSet attrSet = new SimpleAttributeSet();
                         StyleConstants.setFontFamily(attrSet, "华文行楷");
-                        StyleConstants.setFontSize(attrSet,20);
-                        int over =  position-MAX;//越过的歌词
-                       // System.out.println("越界"+over);
-                        try
-                        {
-                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();//获得歌词内容
-                            StyleConstants.setForeground(attrSet, Color.yellow);//当前歌词高亮
-                            StyleConstants.setBold(attrSet, true);//加粗
-                            if(PlayTime>=breaktime[i]&&PlayTime<=breaktime[i+1]-1){
-                                doc.insertString(doc.getLength(), sLyrics3[i], attrSet);//当前歌词高亮
+                        StyleConstants.setFontSize(attrSet, 20);
+                        int over = position - MAX;// 越过的歌词
+                        // System.out.println("越界"+over);
+                        try {
+                            Document doc = MyExtendsJFrame.this.textLyrics.getDocument();// 获得歌词内容
+                            StyleConstants.setForeground(attrSet, Color.yellow);// 当前歌词高亮
+                            StyleConstants.setBold(attrSet, true);// 加粗
+                            if (PlayTime >= breaktime[i] && PlayTime <= breaktime[i + 1] - 1) {
+                                doc.insertString(doc.getLength(), sLyrics3[i], attrSet);// 当前歌词高亮
                                 System.out.println(sLyrics3[i]);
-                            }
-                            else{//不在当前歌词普通显示
+                            } else {// 不在当前歌词普通显示
                                 StyleConstants.setForeground(attrSet, Color.white);
                                 StyleConstants.setBold(attrSet, false);
-                                if(over>=0&&i-over<=0){//越界
+                                if (over >= 0 && i - over <= 0) {// 越界
                                     continue;
                                 }
                                 doc.insertString(doc.getLength(), sLyrics3[i], attrSet);
                             }
+                        } catch (BadLocationException localBadLocationException) {
                         }
-                        catch (BadLocationException localBadLocationException) {}
                     }
                 }
 
@@ -560,238 +641,232 @@ class MyExtendsJFrame extends JFrame implements ActionListener,MouseListener{
     }
 
     /*
-        重写监听器
-    */
-    @SuppressWarnings("unchecked")//忽略警告
-	/*
-		鼠标按下动作
-	*/
-    public void actionPerformed(ActionEvent e){
-		/*
-			打开音乐文件
-		*/
-        if (e.getSource() == buttonOpenFile)
-        {
-            FileDialog openFile = new FileDialog(this, "音乐文件夹");//文件夹窗体
-            openFile.setVisible(true);//设为可见
-            if(openFile.getFile()!=null){//有选中的
-                playFileName = openFile.getFile();//获得选中的文件名（我和我的祖国.wav）
-            }
-            else{//没有选中的，直接退出
+     * 重写监听器
+     */
+    @SuppressWarnings("unchecked") // 忽略警告
+    /*
+     * 鼠标按下动作
+     */
+    public void actionPerformed(ActionEvent e) {
+        /*
+         * 打开音乐文件
+         */
+        if (e.getSource() == buttonOpenFile) {
+            FileDialog openFile = new FileDialog(this, "音乐文件夹");// 文件夹窗体
+            openFile.setVisible(true);// 设为可见
+            if (openFile.getFile() != null) {// 有选中的
+                playFileName = openFile.getFile();// 获得选中的文件名（我和我的祖国.wav）
+            } else {// 没有选中的，直接退出
                 return;
             }
             System.out.println(playFileName);
 
-            this.playFileDirectory = openFile.getDirectory();//文件的具体目录C:\Users\LittleStar\Desktop\音乐播发器\Music\
+            this.playFileDirectory = openFile.getDirectory();// 文件的具体目录C:\Users\LittleStar\Desktop\音乐播发器\Music\
             System.out.println(playFileDirectory);
-            playFile = playFileDirectory + playFileName;//目录+文件名=指定文件
+            playFile = playFileDirectory + playFileName;// 目录+文件名=指定文件
 
-            audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-            audioPlay.stop();//暂停当前播放
+            audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+            audioPlay.stop();// 暂停当前播放
 
-            //播放需要的时间
+            // 播放需要的时间
             File file = new File(playFile);
-            int iMusicTime = (int)file.length() / 1024 / 173;
+            int iMusicTime = (int) file.length() / 1024 / 173;
             int iSecond = iMusicTime % 60;
             int iMinute = iMusicTime / 60;
 
-            if(!vt.contains(playFileName)){//如果该音乐不在目录
+            if (!vt.contains(playFileName)) {// 如果该音乐不在目录
                 vt.add(playFileName);
-                System.out.println("添加音乐"+playFileName);
-                listPlayFile.setListData(vt);//将播放列表更新
+                System.out.println("添加音乐" + playFileName);
+                listPlayFile.setListData(vt);// 将播放列表更新
                 vtime.add(iMinute + ":" + iSecond);
                 listPlayFileTime.setListData(vtime);
             }
             /*
-				播放该音乐
-			*/
+             * 播放该音乐
+             */
             audioPlay.SetPlayAudioPath("file:" + this.playFile);
             audioPlay.play();
             musictitle.setText(this.playFileName);
-            Icon icon = new ImageIcon("./src/assets/stop1.jpg");//将按钮改为暂停
+            Icon icon = new ImageIcon("./src/assets/icon/pause.png");// 将按钮改为暂停
             buttonPlay.setIcon(icon);
             backgroundPlay.setVisible(true);
-            int nMusicTime = (int)file.length() / 1024 / 173;//计算播放时间
-            timerFun(nMusicTime);//启动时间
+            int nMusicTime = (int) file.length() / 1024 / 173;// 计算播放时间
+            timerFun(nMusicTime);// 启动时间
         }
 
-		/*
-			点击播放音乐
-		*/
+        /*
+         * 点击播放音乐
+         */
         if (e.getSource() == buttonPlay) {
-            if (!audioPlay.playFlag)//如果当前没有播放
+            if (!audioPlay.playFlag)// 如果当前没有播放
             {
-                if(vt.size()!=0){//播放播放队列不为空
-                    if(listPlayFile.getSelectedValue() != null){//如果列表音乐有选中的
-                        playFile = playFileDirectory + listPlayFile.getSelectedValue().toString();//设置播放音乐为选中的音乐
+                if (vt.size() != 0) {// 播放播放队列不为空
+                    if (listPlayFile.getSelectedValue() != null) {// 如果列表音乐有选中的
+                        playFile = playFileDirectory + listPlayFile.getSelectedValue().toString();// 设置播放音乐为选中的音乐
+                    } else {// 没有选中的
+                        playFile = playFileDirectory + listPlayFile.getModel().getElementAt(0).toString();// 选中第一首音乐
+                        listPlayFile.setSelectedIndex(0);// 第一首音乐选中
                     }
-                    else{//没有选中的
-                        playFile = playFileDirectory + listPlayFile.getModel().getElementAt(0).toString();//选中第一首音乐
-                        listPlayFile.setSelectedIndex(0);//第一首音乐选中
-                    }
-                    audioPlay.stop();//关闭之前的
-                    audioPlay.SetPlayAudioPath("file:" + playFile);//设置当前播放路径
-                    audioPlay.play();//播放
-                    Icon icon = new ImageIcon("./src/assets/stop1.jpg");
+                    audioPlay.stop();// 关闭之前的
+                    audioPlay.SetPlayAudioPath("file:" + playFile);// 设置当前播放路径
+                    audioPlay.play();// 播放
+                    Icon icon = new ImageIcon("./src/assets/icon/pause.png");
                     buttonPlay.setIcon(icon);
                     backgroundPlay.setVisible(true);
                     File file = new File(this.playFile);
-                    int nMusicTime = (int)file.length() / 1024 / 173;
+                    int nMusicTime = (int) file.length() / 1024 / 173;
                     timerFun(nMusicTime);
-                }
-                else{//当前播放队列为空
+                } else {// 当前播放队列为空
                     System.out.println("没有音乐可以播放");
                 }
-            }
-            else//当前为音乐播放状态转为暂停
+            } else// 当前为音乐播放状态转为暂停
             {
                 audioPlay.stop();
                 nTimer.cancel();
-                Icon icon = new ImageIcon("./src/assets/play1.jpg");
+                Icon icon = new ImageIcon("./src/assets/icon/play.png");
                 this.buttonPlay.setIcon(icon);
                 this.backgroundPlay.setVisible(false);
-                //记录播放时间
+                // 记录播放时间
 
-                //this.nTimer.cancel();
+                // this.nTimer.cancel();
             }
         }
-		/*
-			是否显示音乐列表
-		*/
-        if(e.getSource() == buttonShowList){
+        /*
+         * 是否显示音乐列表
+         */
+        if (e.getSource() == buttonShowList) {
             System.out.println("是否显示音乐列表");
-            if (listPlayFile.isVisible())
-            {
+            if (listPlayFile.isVisible()) {
                 System.out.println("关闭音乐列表");
                 listPlayFile.setVisible(false);
                 listPlayFileTime.setVisible(false);
-            }
-            else
-            {
+            } else {
                 System.out.println("显示音乐列表");
                 listPlayFile.setVisible(true);
                 listPlayFileTime.setVisible(true);
             }
         }
-		/*
-			播放下一首
-		*/
-        if(e.getSource() == buttonNext){
-            if(vt.size()!=0){
-                //寻找当前播放的位置
+        /*
+         * 播放下一首
+         */
+        if (e.getSource() == buttonNext) {
+            if (vt.size() != 0) {
+                // 寻找当前播放的位置
                 int position = vt.lastIndexOf(playFileName);
-                //System.out.println("当前位置"+position+"当前音乐数量"+vt.size());
-                position = (position+1)%(vt.size());//通过取余获得下一个音乐的位置
-                //System.out.println("当前位置"+position+"当前音乐数量"+vt.size());
-                //System.out.println(vt.get(position));
-                playFileName=(String)vt.get(position);
+                // System.out.println("当前位置"+position+"当前音乐数量"+vt.size());
+                position = (position + 1) % (vt.size());// 通过取余获得下一个音乐的位置
+                // System.out.println("当前位置"+position+"当前音乐数量"+vt.size());
+                // System.out.println(vt.get(position));
+                playFileName = (String) vt.get(position);
                 playFile = playFileDirectory + playFileName;
                 musictitle.setText(playFileName);
-                audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-                audioPlay.play();//播放下一首音乐
+                audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+                audioPlay.play();// 播放下一首音乐
                 File file = new File(playFile);
-                int nMusicTime = (int)file.length() / 1024 / 173;//文件播放需要的时间
+                int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                 timerFun(nMusicTime);
-            }
-            else{
+            } else {
                 System.out.println("没有音乐可以播放");
             }
         }
-		/*
-			播放上一首
-		*/
-        if(e.getSource() == buttonPre){
-            if(vt.size()!=0){
-                //寻找当前播放的位置
+        /*
+         * 播放上一首
+         */
+        if (e.getSource() == buttonPre) {
+            if (vt.size() != 0) {
+                // 寻找当前播放的位置
                 int position = vt.lastIndexOf(playFileName);
-                position = (vt.size()+position-1)%(vt.size());//通过取余获得下一个音乐的位置
-                System.out.println("当前位置"+position+"当前音乐数量"+vt.size());
+                position = (vt.size() + position - 1) % (vt.size());// 通过取余获得下一个音乐的位置
+                System.out.println("当前位置" + position + "当前音乐数量" + vt.size());
                 System.out.println(vt.get(position));
-                playFileName=(String)vt.get(position);
+                playFileName = (String) vt.get(position);
                 playFile = playFileDirectory + playFileName;
                 musictitle.setText(playFileName);
-                audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-                audioPlay.play();//播放下一首音乐
+                audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+                audioPlay.play();// 播放下一首音乐
                 File file = new File(playFile);
-                int nMusicTime = (int)file.length() / 1024 / 173;//文件播放需要的时间
+                int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                 timerFun(nMusicTime);
-            }
-            else{
+            } else {
                 System.out.println("没有音乐可以播放");
             }
         }
 
-		/*
-			设置播放方式
-		*/
-        if(e.getSource()==buttonWay){
-            //0->循环播放 1->顺序播放 2->随机播放
-            if(flagway==0){//循环播放切换到顺序播放
+        /*
+         * 设置播放方式
+         */
+        if (e.getSource() == buttonWay) {
+            // 0->循环播放 1->顺序播放 2->随机播放
+            if (flagway == 0) {// 循环播放切换到顺序播放
                 flagway = 1;
                 System.out.println("顺序播放");
-                Icon icon = new ImageIcon("./src/assets/unloop.jpg");
+                Icon icon = new ImageIcon("./src/assets/icon/unloop.png");
                 buttonWay.setIcon(icon);
-            }
-            else if(flagway == 1){//顺序播放切换到随机播放
+            } else if (flagway == 1) {// 顺序播放切换到随机播放
                 flagway = 2;
                 System.out.println("随机播放");
-                Icon icon = new ImageIcon("./src/assets/rand.jpg");
+                Icon icon = new ImageIcon("./src/assets/icon/shuffle.png");
                 buttonWay.setIcon(icon);
-            }
-            else if(flagway == 2){//随机播放切换到循环播放
+            } else if (flagway == 2) {// 随机播放切换到循环播放
                 flagway = 0;
                 System.out.println("循环播放");
-                Icon icon = new ImageIcon("./src/assets/loop.jpg");
+                Icon icon = new ImageIcon("./src/assets/icon/repeat.png");
                 buttonWay.setIcon(icon);
             }
         }
     }
 
 
-    //鼠标点击触发事件
-    public void  mouseClicked(MouseEvent e){
+
+    // 鼠标点击触发事件
+    public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-			/*
-				点击音乐播放列表两次
-			*/
-            if(e.getSource()==listPlayFile){
-                int n =vt.size();//播放列表的音乐数
-                if (n != 0)//如果有音乐
+            /*
+             * 点击音乐播放列表两次
+             */
+            if (e.getSource() == listPlayFile) {
+                int n = vt.size();// 播放列表的音乐数
+                if (n != 0)// 如果有音乐
                 {
-                    if (listPlayFile.getSelectedValue() != null) {//选中了一个音乐
+                    if (listPlayFile.getSelectedValue() != null) {// 选中了一个音乐
                         playFileName = listPlayFile.getSelectedValue().toString();
-                        playFile = playFileDirectory + playFileName;//播放文件设为选中的文件
-                    }
-                    else {//未选中则选中第一个
+                        playFile = playFileDirectory + playFileName;// 播放文件设为选中的文件
+                    } else {// 未选中则选中第一个
                         playFileName = listPlayFile.getModel().getElementAt(0).toString();
                         playFile = playFileDirectory + playFileName;
                     }
 
-                    audioPlay.SetPlayAudioPath("file:" + playFile);//设置播放路径
-                    audioPlay.play();//播放
+                    audioPlay.SetPlayAudioPath("file:" + playFile);// 设置播放路径
+                    audioPlay.play();// 播放
 
-                    musictitle.setText(listPlayFile.getSelectedValue().toString());//设置音乐名
-                    Icon icon = new ImageIcon("./src/assets/stop1.jpg");//播放按钮转换为暂停
+                    musictitle.setText(listPlayFile.getSelectedValue().toString());// 设置音乐名
+                    Icon icon = new ImageIcon("./src/assets/icon/pause.png");// 播放按钮转换为暂停
                     buttonPlay.setIcon(icon);
                     backgroundPlay.setVisible(true);
 
                     File file = new File(playFile);
-                    int nMusicTime = (int)file.length() / 1024 / 173;//文件播放需要的时间
+                    int nMusicTime = (int) file.length() / 1024 / 173;// 文件播放需要的时间
                     timerFun(nMusicTime);
                 }
             }
         }
     }
 
-    //用不到的接口
-    public void mousePressed(MouseEvent e){}
-    public void mouseReleased(MouseEvent e){}
-    public void mouseEntered(MouseEvent e){}
-    public void  mouseExited(MouseEvent e){}
+    // 用不到的接口
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
 }
 // public class MusicPlay{
-//     public static void main(String[] args) {
-//         MyExtendsJFrame frame=new MyExtendsJFrame();
-//     }
+// public static void main(String[] args) {
+// MyExtendsJFrame frame=new MyExtendsJFrame();
 // }
-
+// }
