@@ -258,6 +258,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         backgroundPlay = new JLabel(icon);
         backgroundPlay.setBounds(40, 40, 450, 450);
         getLayeredPane().add(backgroundPlay);
+        
         // backgroundPlay.addMouseListener(this);//添加监听器
 
         /*
@@ -308,25 +309,25 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
          * 歌词
          */
         textLyrics = new JTextPane(); // 歌词
-        textLyrics.setBounds(width / 2 + 150, height / 2 - 200, 250, 300);// 设置位置
+        textLyrics.setBounds(width / 2 + 100, height / 2 - 275, 250, 300);// 设置位置
         textLyrics.setForeground(Color.white);// 前置颜色
         textLyrics.setOpaque(false);
         add(textLyrics);
         textLyrics.setText("这是歌词");// 歌词内容
         //设置为只读
         textLyrics.setEditable(false);
-        textLyrics.setFont(new Font("华文行楷", 1, 20));
+        textLyrics.setFont(new Font("华文行楷", 1, 30));
 
         /*
          * 歌名
          */
 
         musictitle = new JTextArea("歌名");
-        musictitle.setBounds(width / 2 + 200, height / 2 - 200 - 50, 300, 100);
+        musictitle.setBounds(width / 2 + 50, height / 2 - 325 , 450, 100);
         musictitle.setForeground(Color.white);
         musictitle.setOpaque(false);
         musictitle.setEditable(false);
-        musictitle.setFont(new Font("华文行楷", 1, 30));
+        musictitle.setFont(new Font("华文行楷", 1, 45));
         add(musictitle);
 
         /*
@@ -367,8 +368,8 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         //         fileChooser.setDialogTitle("Select MV File");
         //         int result = fileChooser.showOpenDialog(GUI.this);
         //         if (result == JFileChooser.APPROVE_OPTION) {
-        //             File selectedFile = fileChooser.getSelectedFile();
-        //             String mvFilePath = selectedFile.getAbsolutePath();
+        //             File openFile = fileChooser.getopenFile();
+        //             String mvFilePath = openFile.getAbsolutePath();
         //             try {
         //                 Desktop.getDesktop().open(new File(mvFilePath));
         //             } catch (IOException ex) {
@@ -398,8 +399,8 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
                     fileChooser.setDialogTitle("Select MV File");
                     int result = fileChooser.showOpenDialog(MyExtendsJFrame.this);
                     if (result == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-                        String mvFilePath = selectedFile.getAbsolutePath();
+                        File openFile = fileChooser.getSelectedFile();
+                        String mvFilePath = openFile.getAbsolutePath();
                         try {
                             Desktop.getDesktop().open(new File(mvFilePath));
                         } catch (IOException ex) {
@@ -651,7 +652,21 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         /*
          * 打开音乐文件
          */
+        // if (e.getSource() == buttonOpenFile) {
+        //     JFileChooser fileChooser = new JFileChooser();
+        //     fileChooser.setCurrentDirectory(new File("D:/Code/java/Pito/src/assets/music"));
+        //     // Set the default directory to "D:/Code/java/Pito/src/assets/music"
+        //     fileChooser.setDialogTitle("Select Music File");
+        //     int result = fileChooser.showOpenDialog(this);
+        //     if (result == JFileChooser.APPROVE_OPTION) {
+        //         File openFile = fileChooser.getSelectedFile();
+        //         String filePath = openFile.getAbsolutePath();
+        //         // Process the selected file
+        //     }
+        // }
         if (e.getSource() == buttonOpenFile) {
+            //设置打开文件默认路径为D:/Code/java/Pito/src/assets/music
+            
             FileDialog openFile = new FileDialog(this, "音乐文件夹");// 文件夹窗体
             openFile.setVisible(true);// 设为可见
             if (openFile.getFile() != null) {// 有选中的
@@ -662,6 +677,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
             System.out.println(playFileName);
 
             this.playFileDirectory = openFile.getDirectory();// 文件的具体目录C:\Users\LittleStar\Desktop\音乐播发器\Music\
+            // this.playFileDirectory = "D:\\Code\\java\\Pito\\src\\assets\\songs";// 文件的具体目录
             System.out.println(playFileDirectory);
             playFile = playFileDirectory + playFileName;// 目录+文件名=指定文件
 
