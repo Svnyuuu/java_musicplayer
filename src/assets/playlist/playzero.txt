@@ -1,0 +1,4 @@
+D:\Code\java\musicplayer\src\assets\songs\Armageddon.mp3
+D:\Code\java\musicplayer\src\assets\songs\Bubble Gum.mp3
+D:\Code\java\musicplayer\src\assets\songs\Supernova.mp3
+D:\Code\java\musicplayer\src\assets\songs\How Sweet.mp3
