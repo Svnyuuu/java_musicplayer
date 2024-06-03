@@ -183,7 +183,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
          */
 
         buttonPlay = new JButton();// 播放按钮
-        buttonPlay.setBounds(width / 2 - tool_width / 2 -80, height - tool_width - 40, tool_width, tool_width); // 设置位置
+        buttonPlay.setBounds(width / 2 - tool_width / 2 - 80, height - tool_width - 40, tool_width, tool_width); // 设置位置
         Icon icon = new ImageIcon("./src/assets/icon/play.png");// 设置图标
         // //设置按键背景透明
         // buttonPlay.setOpaque(false);
@@ -258,7 +258,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         backgroundPlay = new JLabel(icon);
         backgroundPlay.setBounds(40, 40, 450, 450);
         getLayeredPane().add(backgroundPlay);
-        
+
         // backgroundPlay.addMouseListener(this);//添加监听器
 
         /*
@@ -314,7 +314,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         textLyrics.setOpaque(false);
         add(textLyrics);
         textLyrics.setText("这是歌词");// 歌词内容
-        //设置为只读
+        // 设置为只读
         textLyrics.setEditable(false);
         textLyrics.setFont(new Font("华文行楷", 1, 30));
 
@@ -323,7 +323,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
          */
 
         musictitle = new JTextArea("歌名");
-        musictitle.setBounds(width / 2 + 50, height / 2 - 325 , 450, 100);
+        musictitle.setBounds(width / 2 + 50, height / 2 - 325, 450, 100);
         musictitle.setForeground(Color.white);
         musictitle.setOpaque(false);
         musictitle.setEditable(false);
@@ -354,31 +354,33 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         listPlayFileTime.setForeground(Color.white);
         add(listPlayFileTime);
 
-        //添加mv
+        // 添加mv
         // Icon mv = new ImageIcon("./src/assets/icon/mv.png");
         // JLabel mvlabel = new JLabel(mv);
-        // mvlabel.setBounds(width / 2 - tool_width / 2 + 400, height - tool_width - 40, tool_width, tool_width);
+        // mvlabel.setBounds(width / 2 - tool_width / 2 + 400, height - tool_width - 40,
+        // tool_width, tool_width);
         // mvlabel.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         // String songTitle = songTitle;
-        //         // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
-        //         JFileChooser fileChooser = new JFileChooser();
-        //         fileChooser.setCurrentDirectory(new File("D:\\Code\\java\\musicplayer\\src\\assets\\mv"));
-        //         fileChooser.setDialogTitle("Select MV File");
-        //         int result = fileChooser.showOpenDialog(GUI.this);
-        //         if (result == JFileChooser.APPROVE_OPTION) {
-        //             File openFile = fileChooser.getopenFile();
-        //             String mvFilePath = openFile.getAbsolutePath();
-        //             try {
-        //                 Desktop.getDesktop().open(new File(mvFilePath));
-        //             } catch (IOException ex) {
-        //                 ex.printStackTrace();
-        //             }
-        //         }
-        //     } // Add this closing brace
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // // String songTitle = songTitle;
+        // // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setCurrentDirectory(new
+        // File("D:\\Code\\java\\musicplayer\\src\\assets\\mv"));
+        // fileChooser.setDialogTitle("Select MV File");
+        // int result = fileChooser.showOpenDialog(GUI.this);
+        // if (result == JFileChooser.APPROVE_OPTION) {
+        // File openFile = fileChooser.getopenFile();
+        // String mvFilePath = openFile.getAbsolutePath();
+        // try {
+        // Desktop.getDesktop().open(new File(mvFilePath));
+        // } catch (IOException ex) {
+        // ex.printStackTrace();
+        // }
+        // }
+        // } // Add this closing brace
         // });
-        
+
         // add(mvlabel);
         icon = new ImageIcon("./src/assets/icon/mv.png");
 
@@ -390,27 +392,27 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
         linkButton.setBorder(null);
         linkButton.setContentAreaFilled(false);
         linkButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // String songTitle = songTitle;
-                    // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setCurrentDirectory(new File("D:\\Code\\java\\Pito\\src\\assets\\mv"));
-                    fileChooser.setDialogTitle("Select MV File");
-                    int result = fileChooser.showOpenDialog(MyExtendsJFrame.this);
-                    if (result == JFileChooser.APPROVE_OPTION) {
-                        File openFile = fileChooser.getSelectedFile();
-                        String mvFilePath = openFile.getAbsolutePath();
-                        try {
-                            Desktop.getDesktop().open(new File(mvFilePath));
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // String songTitle = songTitle;
+                // String mvFilePath = "path/to/mv/" + songTitle + ".mp4";
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("D:\\Code\\java\\Pito\\src\\assets\\mv"));
+                fileChooser.setDialogTitle("Select MV File");
+                int result = fileChooser.showOpenDialog(MyExtendsJFrame.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File openFile = fileChooser.getSelectedFile();
+                    String mvFilePath = openFile.getAbsolutePath();
+                    try {
+                        Desktop.getDesktop().open(new File(mvFilePath));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                } // Add this closing brace
-            });
+                }
+            } // Add this closing brace
+        });
         add(linkButton);
-        
+
     }
 
     /*
@@ -653,20 +655,21 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
          * 打开音乐文件
          */
         // if (e.getSource() == buttonOpenFile) {
-        //     JFileChooser fileChooser = new JFileChooser();
-        //     fileChooser.setCurrentDirectory(new File("D:/Code/java/Pito/src/assets/music"));
-        //     // Set the default directory to "D:/Code/java/Pito/src/assets/music"
-        //     fileChooser.setDialogTitle("Select Music File");
-        //     int result = fileChooser.showOpenDialog(this);
-        //     if (result == JFileChooser.APPROVE_OPTION) {
-        //         File openFile = fileChooser.getSelectedFile();
-        //         String filePath = openFile.getAbsolutePath();
-        //         // Process the selected file
-        //     }
+        // JFileChooser fileChooser = new JFileChooser();
+        // fileChooser.setCurrentDirectory(new
+        // File("D:/Code/java/Pito/src/assets/music"));
+        // // Set the default directory to "D:/Code/java/Pito/src/assets/music"
+        // fileChooser.setDialogTitle("Select Music File");
+        // int result = fileChooser.showOpenDialog(this);
+        // if (result == JFileChooser.APPROVE_OPTION) {
+        // File openFile = fileChooser.getSelectedFile();
+        // String filePath = openFile.getAbsolutePath();
+        // // Process the selected file
+        // }
         // }
         if (e.getSource() == buttonOpenFile) {
-            //设置打开文件默认路径为D:/Code/java/Pito/src/assets/music
-            
+            // 设置打开文件默认路径为D:/Code/java/Pito/src/assets/music
+
             FileDialog openFile = new FileDialog(this, "音乐文件夹");// 文件夹窗体
             openFile.setVisible(true);// 设为可见
             if (openFile.getFile() != null) {// 有选中的
@@ -677,7 +680,8 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
             System.out.println(playFileName);
 
             this.playFileDirectory = openFile.getDirectory();// 文件的具体目录C:\Users\LittleStar\Desktop\音乐播发器\Music\
-            // this.playFileDirectory = "D:\\Code\\java\\Pito\\src\\assets\\songs";// 文件的具体目录
+            // this.playFileDirectory = "D:\\Code\\java\\Pito\\src\\assets\\songs";//
+            // 文件的具体目录
             System.out.println(playFileDirectory);
             playFile = playFileDirectory + playFileName;// 目录+文件名=指定文件
 
@@ -739,7 +743,7 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
             {
                 audioPlay.stop();
                 nTimer.cancel();
-                Icon icon = new ImageIcon("./src/assets/icon/play.png");
+                Icon icon = new ImageIcon("./src/assets/icon/pause.png");
                 this.buttonPlay.setIcon(icon);
                 this.backgroundPlay.setVisible(false);
                 // 记录播放时间
@@ -831,8 +835,6 @@ class MyExtendsJFrame extends JFrame implements ActionListener, MouseListener {
             }
         }
     }
-
-
 
     // 鼠标点击触发事件
     public void mouseClicked(MouseEvent e) {
